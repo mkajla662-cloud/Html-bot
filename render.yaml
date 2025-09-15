@@ -1,0 +1,15 @@
+services:
+  - type: worker
+    name: universal-video-bot
+    env: python
+    plan: free
+    region: oregon
+    buildCommand: ""
+    startCommand: python main.py
+    envVars:
+      - key: API_ID
+        fromService: null
+      - key: API_HASH
+        fromService: null
+      - key: BOT_TOKEN
+        fromService: null
