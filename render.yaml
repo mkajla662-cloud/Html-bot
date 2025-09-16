@@ -1,15 +1,13 @@
 services:
-  - type: worker
+  - type: web
     name: universal-video-bot
     env: python
-    plan: free
-    region: oregon
-    buildCommand: ""
-    startCommand: python main.py
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python main.py"
     envVars:
       - key: API_ID
-        fromService: null
+        sync: false
       - key: API_HASH
-        fromService: null
+        sync: false
       - key: BOT_TOKEN
-        fromService: null
+        sync: false
