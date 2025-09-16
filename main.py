@@ -5,9 +5,9 @@ from pyrogram.types import Message
 from flask import Flask
 
 # ---- Telegram Bot Config ----
-API_ID = int(os.getenv("API_ID"))
-API_HASH = os.getenv("API_HASH")
-BOT_TOKEN = os.getenv("BOT_TOKEN")
+API_ID = int(os.getenv("22480303"))
+API_HASH = os.getenv("99c931b6c1ae6f8c3c3e87da173fa424")
+BOT_TOKEN = os.getenv("8300056150:AAExVt4MbfcyuhLetjZz53KrJAyaSwQ8lUM")
 
 bot = Client(
     "universal_video_bot",
