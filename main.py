@@ -1,7 +1,12 @@
+import os
 import telebot
+from flask import Flask, request
 
-API_TOKEN = 'YOUR_BOT_API_TOKEN'
+API_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")  # Render par env variable set karein
+WEBHOOK_URL = os.getenv("WEBHOOK_URL")  # Render par apni service ka URL set karein
+
 bot = telebot.TeleBot(API_TOKEN)
+app = Flask(__name__)
 
 def link_to_html_player(link):
     if link.endswith('.m3u8'):
@@ -86,7 +91,6 @@ def handle_file(message):
         file_content = downloaded_file.decode('utf-8')
         links = [line.strip() for line in file_content.splitlines() if line.strip()]
         html_result = generate_html(links)
-        
         with open("players.html", "w", encoding="utf-8") as f:
             f.write(html_result)
         with open("players.html", "rb") as f:
@@ -94,4 +98,15 @@ def handle_file(message):
     except Exception as e:
         bot.send_message(message.chat.id, f"Error: {e}")
 
-bot.infinity_polling()
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        bot.process_new_updates([telebot.types.Update.de_json(request.stream.read().decode("utf-8"))])
+        return '', 200
+    return 'Bot running!', 200
+
+if __name__ == "__main__":
+    # Set webhook on start
+    bot.remove_webhook()
+    bot.set_webhook(url=WEBHOOK_URL)
+    app.run(host="0.0.0.0", port=int(os.environ.get('PORT', 5000)))
