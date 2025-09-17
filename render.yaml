@@ -1,13 +1,12 @@
 services:
   - type: web
-    name: universal-video-bot
+    name: telegram-html-bot
     env: python
     buildCommand: "pip install -r requirements.txt"
     startCommand: "python main.py"
+    autoDeploy: true
     envVars:
-      - key: API_ID
-        sync: false
-      - key: API_HASH
-        sync: false
-      - key: BOT_TOKEN
-        sync: false
+      - key: TELEGRAM_BOT_TOKEN
+        value: "APNA_BOT_TOKEN_YAHAN_DALEIN"
+      - key: WEBHOOK_URL
+        value: "https://your-app.onrender.com/"
